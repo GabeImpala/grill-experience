@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grill Experience — Private Chef & BBQ Catering</title>
-<meta name="description" content="Premium grilling and BBQ catering for private parties, corporate events. We bring the fire to you.">
+<title>J&J Grill Masters — Private Chef & BBQ Catering</title>
+<meta name="description" content="Premium live fire catering for private parties, corporate events. We bring the fire to you.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -193,7 +193,7 @@
 <body>
 
 <nav>
-  <a href="#" class="nav-logo">Grill<span>Experience</span></a>
+  <a href="#" class="nav-logo">J&amp;J <span>Grill Masters</span></a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#menu">Gallery</a></li>
@@ -338,25 +338,24 @@
     <div class="booking-info">
       <h3>Ready to bring the fire?</h3>
       <p>Fill out the form and we'll get back to you within 24 hours with availability and a custom quote. No commitment required.</p>
-      <div class="contact-detail"><span class="icon">📞</span><span><a href="tel:+18001234567">(800) 123-4567</a></span></div>
-      <div class="contact-detail"><span class="icon">✉️</span><span><a href="mailto:hello@grillexperience.com">hello@grillexperience.com</a></span></div>
+      <div class="contact-detail"><span class="icon">✉️</span><span><a href="mailto:hello@jjgrillmasters.com">hello@jjgrillmasters.com</a></span></div>
       <div class="contact-detail"><span class="icon">📍</span><span>Available throughout the Dallas–Fort Worth area</span></div>
       <div class="contact-detail"><span class="icon">🕐</span><span>Mon–Sat, 9am–7pm</span></div>
     </div>
     <div class="booking-form">
+      <form name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="submitForm(event)" id="bookingNetlify">
+        <input type="hidden" name="form-name" value="booking">
+        <p style="display:none;"><input name="bot-field"></p>
       <div id="formContent">
         <div class="form-2col">
-          <div class="form-row"><label>First Name</label><input type="text" id="firstName" placeholder="John"></div>
-          <div class="form-row"><label>Last Name</label><input type="text" id="lastName" placeholder="Smith"></div>
+          <div class="form-row"><label>First Name</label><input type="text" id="firstName" name="firstName" placeholder="John"></div>
+          <div class="form-row"><label>Last Name</label><input type="text" id="lastName" name="lastName" placeholder="Smith"></div>
         </div>
+        <div class="form-row"><label>Email</label><input type="email" id="email" name="email" placeholder="you@email.com"></div>
         <div class="form-2col">
-          <div class="form-row"><label>Email</label><input type="email" id="email" placeholder="you@email.com"></div>
-          <div class="form-row"><label>Phone</label><input type="tel" id="phone" placeholder="(555) 000-0000"></div>
-        </div>
-        <div class="form-2col">
-          <div class="form-row"><label>Event Date</label><input type="date" id="eventDate"></div>
+          <div class="form-row"><label>Event Date</label><input type="date" id="eventDate" name="eventDate"></div>
           <div class="form-row"><label>Guest Count</label>
-            <select id="guestCount">
+            <select id="guestCount" name="guestCount">
               <option value="">Select range</option>
               <option>Under 20</option>
               <option>20 – 35</option>
@@ -366,7 +365,7 @@
           </div>
         </div>
         <div class="form-row"><label>Event Type</label>
-          <select id="eventType">
+          <select id="eventType" name="eventType">
             <option value="">Select type</option>
             <option>Private Party</option>
             <option>Corporate Event</option>
@@ -374,11 +373,12 @@
           </select>
         </div>
         <div class="form-row"><label>Tell us about your event</label>
-          <textarea id="message" placeholder="Location, theme, dietary needs, or anything else we should know..."></textarea>
+          <textarea id="message" name="message" placeholder="Location, theme, dietary needs, or anything else we should know..."></textarea>
         </div>
-        <button class="form-submit" onclick="submitForm()">Send Request</button>
+        <button type="submit" class="form-submit">Send Request</button>
         <p class="form-note">We'll respond within 24 hours. No spam, ever.</p>
       </div>
+      </form>
       <div class="form-success" id="formSuccess">
         <div class="check">🔥</div>
         <h4>Request received!</h4>
@@ -389,8 +389,8 @@
 </section>
 
 <footer>
-  <div class="footer-logo">Grill<span>Experience</span></div>
-  <div class="footer-copy">© 2026 Grill Experience. All rights reserved.</div>
+  <div class="footer-logo">J&amp;J <span>Grill Masters</span></div>
+  <div class="footer-copy">© 2026 J&amp;J Grill Masters All rights reserved.</div>
 </footer>
 
 <script>
@@ -439,7 +439,8 @@ videos[0].play().catch(() => {});
 scheduleNext();
 
 // ── FORM ──
-function submitForm() {
+function submitForm(e) {
+  if(e) e.preventDefault();
   const firstName = document.getElementById('firstName').value.trim();
   const email = document.getElementById('email').value.trim();
   const eventDate = document.getElementById('eventDate').value;
