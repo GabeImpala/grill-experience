@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grill Experience — Private Chef & BBQ Catering</title>
+<meta name="description" content="Premium grilling and BBQ catering for private parties, corporate events. We bring the fire to you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --char:  #1A1410;
+    --coal:  #241C15;
+    --ember: #C8521A;
+    --amber: #E8A030;
+    --cream: #F5EFE4;
+    --smoke: #8C7B6B;
+    --white: #FDFAF6;
+    --line:  rgba(200,180,150,0.15);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--char); color: var(--cream); font-family: 'Inter', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: linear-gradient(to bottom, rgba(26,20,16,0.97), rgba(26,20,16,0.0));
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); text-decoration: none; }
+  .nav-logo span { color: var(--ember); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { color: rgba(245,239,228,0.7); font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color .2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--ember); color: var(--white); border: none; padding: 11px 24px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background .2s; }
+  .nav-cta:hover { background: #D96020; }
+
+  /* ── HERO ── */
+  .hero { position: relative; min-height: 75vh; max-height: 860px; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 48px 80px; overflow: hidden; }
+
+  /* Video background */
+  .hero-video-wrap { position: absolute; inset: 0; z-index: 0; background: #0E0A07; }
+  .hero-video-wrap video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .hero-video-wrap video.active { opacity: 1; }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(15,10,6,0.88) 0%,
+      rgba(15,10,6,0.60) 50%,
+      rgba(15,10,6,0.25) 100%
+    );
+  }
+  .hero-overlay-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+    background: linear-gradient(to top, var(--char), transparent);
+  }
+
+  /* Hero content */
+  .hero-content { position: relative; z-index: 10; }
+  .hero-tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ember);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--ember); }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 900; line-height: 0.95;
+    color: var(--white); letter-spacing: -0.02em;
+    max-width: 860px; margin-bottom: 28px;
+  }
+  .hero-headline em { font-style: italic; color: var(--ember); }
+  .hero-sub { font-size: 17px; color: rgba(245,239,228,0.75); font-weight: 300; max-width: 460px; line-height: 1.7; margin-bottom: 44px; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn-primary { background: var(--ember); color: var(--white); padding: 16px 36px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background .2s, transform .15s; }
+  .btn-primary:hover { background: #D96020; transform: translateY(-1px); }
+  .btn-ghost { color: var(--cream); border: 1px solid rgba(200,180,150,0.3); padding: 16px 36px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: border-color .2s; }
+  .btn-ghost:hover { border-color: var(--smoke); }
+
+  /* Video dots indicator */
+  .video-dots { position: absolute; bottom: 32px; right: 48px; z-index: 10; display: flex; gap: 8px; }
+  .video-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: background .3s; }
+  .video-dot.active { background: var(--ember); }
+
+  /* ── STATS ── */
+  .stats-bar { background: var(--coal); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 28px 48px; display: flex; justify-content: space-around; flex-wrap: wrap; }
+  .stat { text-align: center; padding: 8px 24px; border-right: 1px solid var(--line); flex: 1; min-width: 140px; }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: var(--amber); line-height: 1; }
+  .stat-label { font-size: 11px; color: var(--smoke); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 96px 48px; }
+  .section-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ember); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ember); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 16px; }
+  .section-sub { font-size: 16px; color: var(--smoke); max-width: 520px; line-height: 1.7; font-weight: 300; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--char); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin-top: 56px; }
+  .service-card { background: var(--coal); padding: 40px 36px; border: 1px solid var(--line); position: relative; overflow: hidden; transition: border-color .25s; }
+  .service-card:hover { border-color: rgba(200,82,26,0.4); }
+  .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--ember); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 32px; margin-bottom: 20px; display: block; }
+  .service-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+  .service-desc { font-size: 14px; color: var(--smoke); line-height: 1.7; font-weight: 300; }
+
+  /* ── MENU / PHOTO GRID ── */
+  #menu { background: var(--coal); }
+  .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; gap: 4px; margin-top: 56px; }
+  .photo-item { position: relative; overflow: hidden; aspect-ratio: 4/3; }
+  .photo-item.tall { grid-row: span 2; aspect-ratio: unset; }
+  .photo-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; display: block; }
+  .photo-item:hover img { transform: scale(1.04); }
+  .photo-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 20px 16px 14px;
+    background: linear-gradient(to top, rgba(15,10,6,0.85), transparent);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; color: var(--white); font-weight: 700;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .3s, transform .3s;
+  }
+  .photo-item:hover .photo-label { opacity: 1; transform: translateY(0); }
+
+  /* ── PROCESS ── */
+  #process { background: var(--char); }
+  .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-top: 56px; }
+  .step-num { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900; color: rgba(200,82,26,0.15); line-height: 1; margin-bottom: -16px; }
+  .step-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 10px; position: relative; }
+  .step-desc { font-size: 14px; color: var(--smoke); line-height: 1.7; font-weight: 300; }
+
+  /* ── BOOKING ── */
+  #booking { background: var(--coal); }
+  .booking-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 56px; }
+  .booking-info h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--white); margin-bottom: 16px; }
+  .booking-info p { font-size: 15px; color: var(--smoke); line-height: 1.8; font-weight: 300; margin-bottom: 32px; }
+  .contact-detail { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .contact-detail .icon { font-size: 18px; }
+  .contact-detail span { font-size: 14px; color: var(--smoke); }
+  .contact-detail a { color: var(--cream); text-decoration: none; transition: color .2s; }
+  .contact-detail a:hover { color: var(--amber); }
+  .booking-form { background: var(--char); border: 1px solid var(--line); padding: 40px; }
+  .form-row { margin-bottom: 20px; }
+  .form-row label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--smoke); margin-bottom: 8px; }
+  .form-row input, .form-row select, .form-row textarea { width: 100%; background: var(--coal); border: 1px solid var(--line); color: var(--cream); padding: 13px 16px; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; transition: border-color .2s; appearance: none; -webkit-appearance: none; }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color: var(--ember); }
+  .form-row input::placeholder, .form-row textarea::placeholder { color: var(--smoke); opacity: 0.6; }
+  .form-row textarea { resize: vertical; min-height: 100px; }
+  .form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-submit { width: 100%; background: var(--ember); color: var(--white); border: none; padding: 16px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background .2s; margin-top: 8px; }
+  .form-submit:hover { background: #D96020; }
+  .form-note { font-size: 12px; color: var(--smoke); text-align: center; margin-top: 12px; font-weight: 300; }
+  .form-success { display: none; text-align: center; padding: 40px 20px; }
+  .form-success .check { font-size: 48px; margin-bottom: 16px; }
+  .form-success h4 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--white); margin-bottom: 10px; }
+  .form-success p { font-size: 14px; color: var(--smoke); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--char); border-top: 1px solid var(--line); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--white); font-weight: 700; }
+  .footer-logo span { color: var(--ember); }
+  .footer-copy { font-size: 13px; color: var(--smoke); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 0 24px 64px; }
+    section { padding: 64px 24px; }
+    .stats-bar { padding: 20px 24px; }
+    .booking-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .form-2col { grid-template-columns: 1fr; }
+    .booking-form { padding: 24px 20px; }
+    footer { padding: 28px 24px; flex-direction: column; text-align: center; }
+    .photo-grid { grid-template-columns: 1fr 1fr; }
+    .photo-item.tall { grid-row: span 1; aspect-ratio: 4/3; }
+    .video-dots { right: 20px; bottom: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Grill<span>Experience</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#menu">Gallery</a></li>
+    <li><a href="#process">How it works</a></li>
+    <li><a href="#booking">Contact</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO with video background -->
+<section class="hero" id="home">
+  <div class="hero-video-wrap">
+    <video id="v0" autoplay muted playsinline loop="false" preload="auto" src="https://res.cloudinary.com/kg48bgfc/video/upload/q_auto:best,f_auto/v1785186686/Charcoal_Zoomed_In_igui2c.mp4"></video>
+    <video id="v1" muted playsinline preload="none" src="https://res.cloudinary.com/kg48bgfc/video/upload/q_auto:best,f_auto/v1785186685/Azotando_Lo-Mo_jig3as.mp4"></video>
+    <video id="v2" muted playsinline preload="none" src="https://res.cloudinary.com/kg48bgfc/video/upload/q_auto:best,f_auto/v1785186685/Cutting_Zoomed_In_pgbwpj.mp4"></video>
+    <video id="v3" muted playsinline preload="none" src="https://res.cloudinary.com/kg48bgfc/video/upload/q_auto:best,f_auto/v1785186686/Octopus_vnwdlo.mp4"></video>
+    <video id="v4" muted playsinline preload="none" src="https://res.cloudinary.com/kg48bgfc/video/upload/q_auto:best,f_auto/v1785186686/Trompitos_Fast_pct59d.mp4"></video>
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay-bottom"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Private Chef & BBQ Catering</div>
+    <h1 class="hero-headline">Fire, craft,<br><em>your event.</em></h1>
+    <p class="hero-sub">We bring the full grilling experience to you — premium cuts, live fire cooking, and a setup that makes your event unforgettable.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary">Request a Quote</a>
+      <a href="#services" class="btn-ghost">Our Services</a>
+    </div>
+  </div>
+
+  <div class="video-dots" id="videoDots">
+    <div class="video-dot active" onclick="goToVideo(0)"></div>
+    <div class="video-dot" onclick="goToVideo(1)"></div>
+    <div class="video-dot" onclick="goToVideo(2)"></div>
+    <div class="video-dot" onclick="goToVideo(3)"></div>
+    <div class="video-dot" onclick="goToVideo(4)"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Years of experience</div></div>
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Events grilled</div></div>
+  <div class="stat"><div class="stat-num">50</div><div class="stat-label">Up to 50 guests</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Setup & cleanup included</div></div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag">What we do</div>
+  <h2 class="section-title">Every occasion,<br>perfectly grilled</h2>
+  <p class="section-sub">From intimate backyard dinners to large corporate events — we handle everything from fire to plate.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🏡</span>
+      <div class="service-name">Private Parties</div>
+      <p class="service-desc">Birthdays, anniversaries, family reunions. We set up, cook, serve, and clean up so you can focus on your guests.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🏢</span>
+      <div class="service-name">Corporate Events</div>
+      <p class="service-desc">Team lunches, client appreciation days, company milestones. Premium food that leaves a lasting impression.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🎉</span>
+      <div class="service-name">Custom Events</div>
+      <p class="service-desc">Tailgates, fundraisers, neighborhood block parties — if it calls for great food and good fire, we're in.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔥</span>
+      <div class="service-name">Live Fire Experience</div>
+      <p class="service-desc">A live grill station that becomes the centerpiece of your event. Custom menus, show cooking, premium cuts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="menu">
+  <div class="section-tag">The food</div>
+  <h2 class="section-title">What comes<br>off our grill</h2>
+  <p class="section-sub">Every item is cooked to order over real charcoal. No shortcuts, no shortcuts.</p>
+
+  <div class="photo-grid">
+    <div class="photo-item tall">
+      <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_800/v1785186684/Picanha_Temp_hhzovl.jpg" alt="Picanha" loading="lazy">
+      <div class="photo-label">Picanha</div>
+    </div>
+    <div class="photo-item">
+      <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_600/v1785186684/Carbon_Zoomed_Im_zeuwts.jpg" alt="Charcoal fire" loading="lazy">
+      <div class="photo-label">Live Fire</div>
+    </div>
+    <div class="photo-item">
+      <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_600/v1785186685/Chicken_Violado_xeskks.jpg" alt="Smoked Chicken" loading="lazy">
+      <div class="photo-label">Smoked Chicken</div>
+    </div>
+    <div class="photo-item">
+      <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_600/v1785186685/Jalapenos_Zommed_In_lqg1cb.jpg" alt="Bacon-wrapped jalapeños" loading="lazy">
+      <div class="photo-label">Bacon Jalapeños</div>
+    </div>
+    <div class="photo-item">
+      <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_600/v1785186685/Shrimp_pezdfd.jpg" alt="Grilled Shrimp" loading="lazy">
+      <div class="photo-label">Grilled Shrimp</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-tag">How it works</div>
+  <h2 class="section-title">Simple from start<br>to smoke</h2>
+  <p class="section-sub">No stress, no guesswork. We handle the logistics so you enjoy the experience.</p>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Tell us about your event</div>
+      <p class="step-desc">Fill out the form with your date, guest count, and preferences. We'll follow up within 24 hours.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">We build your menu</div>
+      <p class="step-desc">Custom menu around your tastes, dietary needs, and budget. No template packages — ever.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">We arrive and set up</div>
+      <p class="step-desc">Our team arrives early, sets up the full grill station, and handles everything — you don't lift a finger.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Eat, enjoy, celebrate</div>
+      <p class="step-desc">Live-fire cooking in front of your guests, fresh off the grill. We stay through service and clean up after.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="section-tag">Get in touch</div>
+  <h2 class="section-title">Let's plan<br>your event</h2>
+  <div class="booking-wrap">
+    <div class="booking-info">
+      <h3>Ready to bring the fire?</h3>
+      <p>Fill out the form and we'll get back to you within 24 hours with availability and a custom quote. No commitment required.</p>
+      <div class="contact-detail"><span class="icon">📞</span><span><a href="tel:+18001234567">(800) 123-4567</a></span></div>
+      <div class="contact-detail"><span class="icon">✉️</span><span><a href="mailto:hello@grillexperience.com">hello@grillexperience.com</a></span></div>
+      <div class="contact-detail"><span class="icon">📍</span><span>Available throughout the Dallas–Fort Worth area</span></div>
+      <div class="contact-detail"><span class="icon">🕐</span><span>Mon–Sat, 9am–7pm</span></div>
+    </div>
+    <div class="booking-form">
+      <div id="formContent">
+        <div class="form-2col">
+          <div class="form-row"><label>First Name</label><input type="text" id="firstName" placeholder="John"></div>
+          <div class="form-row"><label>Last Name</label><input type="text" id="lastName" placeholder="Smith"></div>
+        </div>
+        <div class="form-2col">
+          <div class="form-row"><label>Email</label><input type="email" id="email" placeholder="you@email.com"></div>
+          <div class="form-row"><label>Phone</label><input type="tel" id="phone" placeholder="(555) 000-0000"></div>
+        </div>
+        <div class="form-2col">
+          <div class="form-row"><label>Event Date</label><input type="date" id="eventDate"></div>
+          <div class="form-row"><label>Guest Count</label>
+            <select id="guestCount">
+              <option value="">Select range</option>
+              <option>Under 20</option>
+              <option>20 – 35</option>
+              <option>35 – 50</option>
+              <option>50+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row"><label>Event Type</label>
+          <select id="eventType">
+            <option value="">Select type</option>
+            <option>Private Party</option>
+            <option>Corporate Event</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Tell us about your event</label>
+          <textarea id="message" placeholder="Location, theme, dietary needs, or anything else we should know..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">Send Request</button>
+        <p class="form-note">We'll respond within 24 hours. No spam, ever.</p>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="check">🔥</div>
+        <h4>Request received!</h4>
+        <p>We'll be in touch within 24 hours with availability and a custom quote.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Grill<span>Experience</span></div>
+  <div class="footer-copy">© 2026 Grill Experience. All rights reserved.</div>
+</footer>
+
+<script>
+// ── VIDEO ROTATOR ──
+const videos = [
+  document.getElementById('v0'),
+  document.getElementById('v1'),
+  document.getElementById('v2'),
+  document.getElementById('v3'),
+  document.getElementById('v4'),
+];
+const dots = document.querySelectorAll('.video-dot');
+let current = 0;
+let timer = null;
+
+function goToVideo(index) {
+  // Fade out current
+  videos[current].classList.remove('active');
+  dots[current].classList.remove('active');
+
+  current = index;
+
+  // Load and play next
+  const next = videos[current];
+  next.load();
+  next.play().catch(() => {});
+  next.classList.add('active');
+  dots[current].classList.add('active');
+
+  // Reset auto-advance
+  clearTimeout(timer);
+  scheduleNext();
+}
+
+function scheduleNext() {
+  // Advance after video ends, or after 8s max
+  const next = videos[current];
+  const advance = () => goToVideo((current + 1) % videos.length);
+  next.onended = advance;
+  timer = setTimeout(advance, 9000);
+}
+
+// Start
+videos[0].classList.add('active');
+videos[0].play().catch(() => {});
+scheduleNext();
+
+// ── FORM ──
+function submitForm() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const eventDate = document.getElementById('eventDate').value;
+  const guestCount = document.getElementById('guestCount').value;
+  if (!firstName || !email || !eventDate || !guestCount) {
+    alert('Please fill in your name, email, event date, and guest count.');
+    return;
+  }
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>
