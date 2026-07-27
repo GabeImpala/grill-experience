@@ -448,8 +448,23 @@ function submitForm(e) {
     alert('Please fill in your name, email, event date, and guest count.');
     return;
   }
-  document.getElementById('formContent').style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
+
+  // Submit to Netlify via fetch
+  const form = document.getElementById('bookingNetlify');
+  const data = new FormData(form);
+
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(data).toString()
+  })
+  .then(() => {
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  })
+  .catch(() => {
+    alert('Something went wrong. Please try again or email us directly.');
+  });
 }
 </script>
 </body>
