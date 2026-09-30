@@ -37,10 +37,10 @@
   /* PROFILE */
   .profile { display: flex; flex-direction: column; align-items: center; margin-bottom: 32px; }
   .avatar-wrap {
-    width: 110px; height: 110px; border-radius: 50%;
+    width: 150px; height: 150px; border-radius: 50%;
     overflow: hidden; margin-bottom: 18px;
     border: 3px solid var(--ember);
-    box-shadow: 0 0 24px rgba(200,82,26,0.3);
+    box-shadow: 0 0 32px rgba(200,82,26,0.35);
   }
   .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
   .profile-name {
@@ -84,7 +84,7 @@
   .link-title { font-size: 14px; font-weight: 600; color: var(--white); }
   .link-arrow { color: var(--smoke); font-size: 15px; }
 
-  /* GALLERY */
+  /* SECTION LABEL */
   .section-label {
     font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--smoke);
@@ -95,6 +95,8 @@
   .section-label::before, .section-label::after {
     content: ''; flex: 1; height: 1px; background: var(--line);
   }
+
+  /* GALLERY */
   .photo-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 4px; width: 100%; max-width: 420px; margin-bottom: 32px;
@@ -102,6 +104,33 @@
   .photo-item { aspect-ratio: 1; overflow: hidden; border-radius: 8px; }
   .photo-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
   .photo-item:hover img { transform: scale(1.06); }
+
+  /* RECIPES */
+  .recipes { width:100%; max-width:420px; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; }
+  .recipe-card { background:var(--coal); border:1px solid var(--line); border-radius:14px; overflow:hidden; cursor:pointer; transition:border-color .2s; }
+  .recipe-card:hover { border-color:rgba(200,82,26,0.4); }
+  .recipe-soon { cursor:default; opacity:.55; }
+  .recipe-soon:hover { border-color:var(--line); }
+  .recipe-header { display:flex; align-items:center; gap:12px; padding:14px 16px; }
+  .recipe-thumb { width:58px; height:58px; border-radius:10px; overflow:hidden; flex-shrink:0; }
+  .recipe-thumb img { width:100%; height:100%; object-fit:cover; }
+  .recipe-thumb-soon { display:flex; align-items:center; justify-content:center; font-size:26px; background:rgba(200,82,26,0.08); }
+  .recipe-meta { flex:1; display:flex; flex-direction:column; gap:2px; }
+  .recipe-tag { font-size:10px; color:var(--ember); font-weight:600; letter-spacing:.05em; }
+  .recipe-title { font-size:15px; font-weight:600; color:var(--white); }
+  .recipe-sub { font-size:12px; color:var(--smoke); }
+  .recipe-chevron { color:var(--smoke); font-size:22px; font-weight:300; transition:transform .3s; line-height:1; flex-shrink:0; }
+  .recipe-card.open .recipe-chevron { transform:rotate(90deg); }
+  .recipe-body { max-height:0; overflow:hidden; transition:max-height .5s ease, padding .3s; padding:0 16px; }
+  .recipe-card.open .recipe-body { max-height:1200px; padding:0 16px 18px; }
+  .recipe-section-title { font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ember); margin:14px 0 8px; }
+  .recipe-list, .recipe-steps { padding-left:18px; display:flex; flex-direction:column; gap:6px; }
+  .recipe-list li, .recipe-steps li { font-size:13px; color:var(--cream); line-height:1.6; font-weight:300; }
+  .doneness-grid { display:flex; flex-direction:column; gap:6px; background:rgba(255,255,255,0.03); border-radius:10px; padding:12px; margin:10px 0; }
+  .doneness-item { display:flex; align-items:center; gap:10px; }
+  .d-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .d-label { font-size:13px; color:var(--cream); flex:1; font-weight:400; }
+  .d-time { font-size:12px; color:var(--smoke); }
 
   /* FOOTER */
   .footer { font-size: 12px; color: var(--smoke); text-align: center; line-height: 1.8; }
@@ -111,67 +140,8 @@
 
 <div class="profile">
   <div class="avatar-wrap">
-    <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_240/v1790561168/YoChef_vdg2ul.png" alt="J&J Grill Masters">
+    <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_300/v1790561168/YoChef_vdg2ul.png" alt="J&J Grill Masters">
   </div>
   <h1 class="profile-name">J&amp;J <span>Grill Masters</span></h1>
   <div class="profile-handle">@jjgrillmasters</div>
-  <p class="profile-bio">🔥 Live fire cooking &amp; recipes. Real charcoal. Real flavor. No shortcuts.</p>
-  <div class="profile-location">📍 Dallas–Fort Worth, TX</div>
-</div>
-
-<div class="links">
-  <a href="https://instagram.com/jjgrillmasters" target="_blank" class="link-btn">
-    <div class="link-icon">📸</div>
-    <div class="link-text">
-      <span class="link-label">Follow us on</span>
-      <span class="link-title">Instagram</span>
-    </div>
-    <span class="link-arrow">→</span>
-  </a>
-
-  <a href="https://tiktok.com/@jjgrillmasters" target="_blank" class="link-btn">
-    <div class="link-icon">🎵</div>
-    <div class="link-text">
-      <span class="link-label">Watch on</span>
-      <span class="link-title">TikTok</span>
-    </div>
-    <span class="link-arrow">→</span>
-  </a>
-
-  <a href="https://youtube.com/@jjgrillmasters" target="_blank" class="link-btn">
-    <div class="link-icon">▶️</div>
-    <div class="link-text">
-      <span class="link-label">Videos on</span>
-      <span class="link-title">YouTube</span>
-    </div>
-    <span class="link-arrow">→</span>
-  </a>
-</div>
-
-<div class="section-label">Recent Cooks</div>
-
-<div class="photo-grid">
-  <div class="photo-item">
-    <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_300/v1785186684/Picanha_Temp_hhzovl.jpg" alt="Picanha">
-  </div>
-  <div class="photo-item">
-    <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_300/v1785186684/Carbon_Zoomed_Im_zeuwts.jpg" alt="Charcoal">
-  </div>
-  <div class="photo-item">
-    <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_300/v1785186685/Jalapenos_Zommed_In_lqg1cb.jpg" alt="Jalapeños">
-  </div>
-  <div class="photo-item">
-    <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_300/v1785186685/Chicken_Violado_xeskks.jpg" alt="Chicken">
-  </div>
-  <div class="photo-item">
-    <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_300/v1785186686/Shrimp_pezdfd.jpg" alt="Shrimp">
-  </div>
-  <div class="photo-item">
-    <img src="https://res.cloudinary.com/kg48bgfc/image/upload/q_auto,f_auto,w_300/v1790561168/YoChef_vdg2ul.png" alt="Chef">
-  </div>
-</div>
-
-<div class="footer">© 2026 J&amp;J Grill Masters · Dallas–Fort Worth, TX</div>
-
-</body>
-</html>
+  <p clas
